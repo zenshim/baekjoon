@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define N 100
+#define N 1000000
 
 typedef int element;
 
@@ -72,6 +72,7 @@ int main() {
             break;
         case 5:
             printf("%d\n", peek(&s));
+            break;
         }
     }
     return 0;
