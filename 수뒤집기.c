@@ -1,8 +1,5 @@
 #include <stdio.h>
 
-/*1234->4321·Î Ãâ·Â*/
-int result=0;
-
 int reverse(int n) {
     int reversed = 0;
     while (n!=0) {
