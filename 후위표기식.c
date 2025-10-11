@@ -47,8 +47,11 @@ element peek(stackType *s) {
 
 int prec(char op) {
     switch (op) {
-        case '(': case ')':
+        case '(': case ')': return 0; break;
+        case '+': case '-': return 1; break;
+        case '*': case '/': return 2; break;
     }
+    return -1;
 }
 
 void postFix(char str[]) {
@@ -67,12 +70,33 @@ void postFix(char str[]) {
         else if (ch_str == ')') {
             op_stack = pop(&s);
             while (!isEmpty(&s) && op_stack!='(') {
-                postfix[j++] = pop(&s);
+                postfix[j++] = op_stack;
                 op_stack = pop(&s);
             }
         }
         else if (ch_str=='+'||ch_str=='-'||ch_str=='*'||ch_str=='/') {
-            
+            while (!isEmpty(&s)) {
+                op_stack = peek(&s);
+                if (prec(op_stack)>=prec(ch_str))
+                    postfix[j++] = pop(&s);
+                else 
+                    break;
+            }
+            push(&s, ch_str);
         }
     }
+
+    while (!isEmpty(&s))
+        postfix[j++] = pop(&s);
+    postfix[j] = '\0';
+    printf("%s", postfix);
+}
+
+int main() {
+    char str[N];
+    fgets(str, N, stdin);
+    str[strcspn(str, "\n")] = '\0';
+    postFix(str);
+
+    return 0;
 }
